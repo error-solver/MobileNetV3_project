@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ed">
+  <meta name="description" content="A research interface for lightweight skin lesion classification with MobileNetV3-Small and frequency-domain attention.">
+  <title>Derma / Vision — Skin lesion research</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Derma Vision home">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="14" fill="#183e3b"/><path d="M13 24c5.5-10 16.5-10 22 0-5.5 10-16.5 10-22 0Z" stroke="#e6eddb" stroke-width="1.8"/><circle cx="24" cy="24" r="5.1" fill="#c8d993"/><circle cx="24" cy="24" r="1.7" fill="#183e3b"/></svg>
+        <span>derma<span class="brand-slash">/</span>vision<small>RESEARCH LAB</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#overview" class="nav-link active">Overview</a>
+        <a href="#workspace" class="nav-link">Workspace</a>
+        <a href="#models" class="nav-link">The models</a>
+        <a href="#evaluation" class="nav-link">Evaluation</a>
+      </nav>
+      <a class="header-cta" href="#workspace">Open workspace <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </header>
+
+    <main id="top">
+      <section class="hero section" id="overview">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><span class="eyebrow-line"></span> COMPUTER VISION RESEARCH <span class="eyebrow-index">/ 01</span></div>
+          <h1>Seeing patterns<br><em>beyond the surface.</em></h1>
+          <p class="hero-lede">An exploration of lightweight deep learning for seven-class skin lesion classification. Built around MobileNetV3-Small, with a frequency-domain attention approach.</p>
+          <div class="hero-actions"><a class="button button-dark" href="#workspace">Explore workspace <span>↗</span></a><a class="text-link" href="#models">How the models work <span>→</span></a></div>
+          <div class="hero-note"><span class="note-dot"></span> Research & educational use only · Not a medical diagnosis tool</div>
+        </div>
+        <div class="hero-art reveal" aria-label="Abstract illustration of layered imaging and analysis">
+          <div class="art-grid"></div><div class="art-glow"></div>
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
+          <div class="art-core"><div class="art-core-inner"></div></div>
+          <div class="art-label art-label-top"><span class="label-cross">✳</span> SPATIAL FEATURES</div>
+          <div class="art-label art-label-bottom"><span class="wave-icon">〰</span> FREQUENCY SIGNAL</div>
+          <div class="art-coordinate">FIG. 01 / FEATURE STUDY</div>
+          <div class="art-scales">224 × 224 PX<br>RGB INPUT</div>
+        </div>
+      </section>
+
+      <section class="status-strip" aria-label="Project facts">
+        <div><span class="strip-number">07</span><span>Lesion classes</span></div>
+        <div><span class="strip-number">02</span><span>Model architectures</span></div>
+        <div><span class="strip-number">224</span><span>Pixel input size</span></div>
+        <div class="strip-note">HAM10000 <span>↗</span><small>DERMOSCOPY DATASET</small></div>
+      </section>
+
+      <section class="workspace section" id="workspace">
+        <div class="section-heading reveal"><div><div class="eyebrow"><span class="eyebrow-line"></span> EXPLORE THE WORKSPACE <span class="eyebrow-index">/ 02</span></div><h2>From image<br><em>to insight.</em></h2></div><p>Preview a dermoscopy image and see how the research pipeline is organized. Live classification requires trained weights and a connected inference service.</p></div>
+        <div class="workspace-panel reveal">
+          <div class="panel-top"><span><span class="live-square"></span> IMAGE WORKSPACE</span><span>LOCAL PREVIEW / NO UPLOAD</span></div>
+          <div class="workspace-main">
+            <div class="upload-column">
+              <input type="file" id="image-input" accept="image/png,image/jpeg,image/webp" hidden>
+              <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Choose or drop a lesion image">
+                <div class="upload-empty" id="upload-empty"><div class="upload-glyph"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 21V7m0 0-5 5m5-5 5 5M6 21v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong>Drop an image here</strong><p>or click to browse your files</p><small>JPG, PNG OR WEBP · MAX 10 MB</small></div>
+                <img id="preview-image" alt="Selected image preview" hidden>
+                <div class="preview-badge" id="preview-badge" hidden>IMAGE PREVIEW</div>
+              </div>
+              <div class="file-meta"><span id="file-name">No image selected</span><button type="button" id="clear-image" hidden>Remove <span>×</span></button></div>
+            </div>
+            <div class="analysis-column">
+              <div class="mini-label">01 / CONFIGURATION</div><h3>Analysis setup</h3>
+              <label for="model-select">Select architecture</label>
+              <div class="select-wrap"><select id="model-select"><option value="frequency_attention">MobileNetV3 + Frequency Attention</option><option value="baseline">MobileNetV3-Small Baseline</option></select><span aria-hidden="true">⌄</span></div>
+              <div class="setup-detail"><div><span>INPUT</span><strong>224 × 224 RGB</strong></div><div><span>CLASSES</span><strong>7 lesion types</strong></div><div><span>STATUS</span><strong class="status-unavailable">Not connected</strong></div></div>
+              <button class="button button-disabled" disabled>Run analysis <span>↗</span></button>
+              <p class="workspace-explainer" id="workspace-message">To enable analysis, train a model and connect its checkpoint to an inference service. Image selection here stays in your browser.</p>
+            </div>
+          </div>
+          <div class="panel-bottom"><span>RESEARCH INTERFACE · VERSION 01</span><span>NO IMAGE IS SENT OR STORED</span></div>
+        </div>
+      </section>
+
+      <section class="models section" id="models">
+        <div class="section-heading reveal"><div><div class="eyebrow"><span class="eyebrow-line"></span> THE APPROACH <span class="eyebrow-index">/ 03</span></div><h2>Two paths.<br><em>One question.</em></h2></div><p>Does frequency information help a compact vision model distinguish lesion patterns? The project compares the standard architecture with an attention-enhanced version.</p></div>
+        <div class="model-grid">
+          <article class="model-card baseline-card reveal"><div class="card-kicker"><span>01 / REFERENCE</span><span class="card-arrow">↗</span></div><div class="model-illustration baseline-illustration" aria-hidden="true"><span class="block b1"></span><span class="connector"></span><span class="block b2"></span><span class="connector"></span><span class="block b3"></span></div><div class="card-body"><span class="tag">BASELINE MODEL</span><h3>MobileNetV3<br>Small</h3><p>A compact convolutional backbone with ImageNet transfer learning and a seven-class output layer.</p><div class="model-flow">IMAGE <span>→</span> FEATURES <span>→</span> CLASSIFIER</div></div></article>
+          <article class="model-card proposed-card reveal"><div class="card-kicker"><span>02 / PROPOSED</span><span class="card-arrow">↗</span></div><div class="model-illustration attention-illustration" aria-hidden="true"><div class="signal signal-a"></div><div class="signal signal-b"></div><div class="signal signal-c"></div><div class="signal signal-d"></div><div class="signal signal-e"></div><div class="signal signal-f"></div></div><div class="card-body"><span class="tag">PROPOSED MODEL</span><h3>MobileNetV3 +<br>Frequency Attention</h3><p>A lightweight FFT-based module uses frequency magnitudes to reweight feature channels before classification.</p><div class="model-flow">IMAGE <span>→</span> FEATURES <span>→</span> FFT ATTENTION <span>→</span> CLASSIFIER</div></div></article>
+        </div>
+      </section>
+
+      <section class="pipeline section reveal"><div class="pipeline-intro"><div class="eyebrow light"><span class="eyebrow-line"></span> UNDER THE HOOD <span class="eyebrow-index">/ 04</span></div><h2>A clear path<br><em>through the data.</em></h2><p>Each step has a specific role, from consistent image preparation to a held-out evaluation.</p></div><div class="pipeline-steps"><div class="pipeline-step"><span>01</span><div><h3>Prepare</h3><p>Read HAM10000 metadata, resolve image IDs, resize and normalize inputs.</p></div></div><div class="pipeline-step"><span>02</span><div><h3>Train</h3><p>Use a stratified split and class-weighted loss for both architectures.</p></div></div><div class="pipeline-step"><span>03</span><div><h3>Evaluate</h3><p>Compare test-set predictions with accuracy, macro scores and per-class metrics.</p></div></div></div></section>
+
+      <section class="evaluation section" id="evaluation"><div class="section-heading reveal"><div><div class="eyebrow"><span class="eyebrow-line"></span> EVALUATION <span class="eyebrow-index">/ 05</span></div><h2>Let the results<br><em>speak clearly.</em></h2></div><p>Real performance belongs here after training and test evaluation. The interface never substitutes made-up scores for evidence.</p></div><div class="result-panel reveal"><div class="result-symbol">◌</div><div><span>AWAITING EVALUATION</span><h3>No measured results yet.</h3><p>Train both models, evaluate them on the held-out test split, then use the generated CSVs and confusion matrices to report findings.</p></div><a href="#models" class="text-link">Explore the models <span>↗</span></a></div></section>
+    </main>
+    <footer class="site-footer"><div class="footer-brand"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="14" fill="#e8eddc"/><path d="M13 24c5.5-10 16.5-10 22 0-5.5 10-16.5 10-22 0Z" stroke="#183e3b" stroke-width="1.8"/><circle cx="24" cy="24" r="5.1" fill="#a8bf7a"/></svg><span>derma/vision</span></div><div class="footer-copy">A computer vision research project.<br>For education and research, not clinical use.</div><a href="#top">Back to top ↑</a><div class="footer-bottom"><span>© 2026 DERMA / VISION</span><span>DESIGNED FOR CURIOUS MINDS</span></div></footer>
+  </div>
+</body>
+</html>

@@ -1,5 +1,9 @@
 # Skin Lesion Classification with Lightweight CNN
 
+## Frontend preview
+
+The standalone interface is in `frontend/`. Open `frontend/index.html` in a browser to view it, or serve only that folder with `python -m http.server 8000 --bind 127.0.0.1 --directory frontend` and visit `http://127.0.0.1:8000/`. It includes responsive layouts, subtle motion, model explanations, and a local image preview. It does not run classification: the analysis button stays disabled until a trained checkpoint and inference service are connected. No preview image is uploaded or stored.
+
 This research project classifies HAM10000 dermoscopy images with two PyTorch models: an ImageNet pretrained MobileNetV3-Small baseline and a MobileNetV3-Small feature extractor followed by frequency-domain attention. It is designed to run on CPU, with optional CUDA if available. The code is provided without trained weights or claimed results.
 
 **Research and educational use only. It is not a medical diagnosis tool.**
